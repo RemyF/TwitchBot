@@ -15,7 +15,7 @@ class Socket
             echo 'Invalid port';
         }
         else {
-            $this->setSocket(fsockopen($hostname, $port, $errorNumber, $errorString, 30));
+            $this->setSocket(fsockopen($hostname, $port, $this->errorNumber, $this->errorString, 30));
         }
     }
 
@@ -25,6 +25,7 @@ class Socket
     }
 
     // GETTERS
+
     public function getSocket()
     {
         return $this->socket;
