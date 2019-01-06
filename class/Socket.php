@@ -6,9 +6,17 @@ class Socket
     private $errorNumber;
     private $errorString;
 
-    public function connect($hostname, $port, $timeout)
+    public function open($hostname, $port)
     {
-        // TODO: test if param are available
+        if(empty($hostname)) {
+            echo 'Hostname couldn\' be empty';
+        }
+        if(empty($port) && !is_int($port)) {
+            echo 'Invalid port';
+        }
+        else {
+            $this->setSocket(fsockopen($hostname, $port, $errorNumber, $errorString, 30));
+        }
     }
 
     public function disconnect()
@@ -17,6 +25,10 @@ class Socket
     }
 
     // GETTERS
+    public function getSocket()
+    {
+        return $this->socket;
+    }
 
     /**
      * @return int
@@ -35,31 +47,8 @@ class Socket
     }
 
     //SETTERS
-    /**
-     * @param int $errorNumber
-     * @return bool
-     */
-    public function setErrorNumber($errorNumber)
+    public function setSocket($content)
     {
-        if (!empty($errorNumber) && is_int($errorNumber)) {
-            $this->errorNumber = $errorNumber;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param string $errorString
-     * @return bool
-     */
-    public function setErrorString($errorString)
-    {
-        if (!empty($errorString) && is_string($errorString)) {
-            $this->errorString = $errorString;
-            return true;
-        } else {
-            return false;
-        }
+        $this->socket = $content;
     }
 }
